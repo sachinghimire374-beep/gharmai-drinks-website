@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev -p 3470",
     "build": "prisma generate && next build",
-    "start": "next start -p 3470",
+    "start": "next start -p ${PORT:-3470}",
     "lint": "next lint",
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
