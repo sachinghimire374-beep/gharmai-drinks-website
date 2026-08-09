@@ -5,5 +5,7 @@ deployment:
     - /bin/cp -R * $DEPLOYPATH
     - source /home2/kamshipc/nodevenv/gharmaidrinks-app/18/bin/activate && cd $DEPLOYPATH && npm install
     - source /home2/kamshipc/nodevenv/gharmaidrinks-app/18/bin/activate && cd $DEPLOYPATH && npm run build
+    - source /home2/kamshipc/nodevenv/gharmaidrinks-app/18/bin/activate && cd $DEPLOYPATH && npx prisma db push
+    - source /home2/kamshipc/nodevenv/gharmaidrinks-app/18/bin/activate && cd $DEPLOYPATH && npm run db:seed
     - mkdir -p $DEPLOYPATH/tmp
     - touch $DEPLOYPATH/tmp/restart.txt
