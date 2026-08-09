@@ -1,8 +1,9 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home2/kamshipc/repositories/gharmai-drinks-website
-    - source /home2/kamshipc/nodevenv/repositories/gharmai-drinks-website/20/bin/activate && cd $DEPLOYPATH && npm install
-    - source /home2/kamshipc/nodevenv/repositories/gharmai-drinks-website/20/bin/activate && cd $DEPLOYPATH && npm run build
+    - export DEPLOYPATH=/home2/kamshipc/gharmaidrinks-app/
+    - /bin/cp -R * $DEPLOYPATH
+    - source /home2/kamshipc/nodevenv/gharmaidrinks-app/18/bin/activate && cd $DEPLOYPATH && npm install
+    - source /home2/kamshipc/nodevenv/gharmaidrinks-app/18/bin/activate && cd $DEPLOYPATH && npm run build
     - mkdir -p $DEPLOYPATH/tmp
     - touch $DEPLOYPATH/tmp/restart.txt
