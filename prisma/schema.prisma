@@ -5,8 +5,8 @@
 // ============================================================
 generator client {
   provider      = "prisma-client-js"
-  // "native" for local dev; the rhel target is what Netlify/AWS Lambda functions run on.
-  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+  // "native" for local dev; rhel is Netlify/AWS Lambda; debian is the cPanel host.
+  binaryTargets = ["native", "rhel-openssl-3.0.x", "debian-openssl-3.0.x"]
 }
 
 datasource db {
