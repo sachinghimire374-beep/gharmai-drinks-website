@@ -6,6 +6,19 @@ import { CartProvider, useCart } from "./CartContext";
 import ThemeToggle from "./ThemeToggle";
 import BeerBackground from "./BeerBackground";
 import Captcha from "./Captcha";
+import {
+  Settings, ShoppingBag, X, Menu as MenuIcon, MapPin, Phone, Clock, Mail,
+  AlertTriangle, Check, Search, Zap, ShieldCheck, Sparkles, Trash2,
+  CheckCircle2, Home, Wine, Percent, Crown, Moon as MoonIcon, Star,
+} from "lucide-react";
+
+function WhatsAppIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden="true">
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.38a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.86 9.86 0 0 0 12.04 2Zm5.8 14.09c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.12.11-1.81-.11-.42-.13-.95-.31-1.64-.6-2.9-1.25-4.79-4.17-4.93-4.36-.14-.19-1.18-1.57-1.18-3 0-1.42.75-2.12 1.01-2.41.26-.29.58-.36.77-.36.19 0 .39.002.56.01.18.008.42-.07.66.5.24.58.83 2 .9 2.14.07.15.12.32.02.51-.09.19-.14.31-.28.48-.14.16-.3.36-.42.49-.14.15-.29.31-.13.6.17.29.75 1.24 1.61 2 1.11.99 2.04 1.29 2.33 1.44.29.14.46.12.63-.07.17-.19.72-.84.92-1.13.19-.29.38-.24.64-.14.26.1 1.66.78 1.94.93.29.14.48.21.55.33.07.12.07.68-.17 1.36Z" />
+    </svg>
+  );
+}
 
 // ---------- Types ----------
 export type Product = {
@@ -147,7 +160,7 @@ export function BrandSpotlight({ brands }: { brands: Brand[] }) {
               className={`px-5 py-3 rounded-2xl border transition-all ${x === i ? "border-gold/40 bg-gold/5" : "border-white/15 bg-white/[0.06] hover:border-white/20"}`}>
               {br.logo
                 ? <img src={br.logo} alt={br.name} className="h-6 w-auto object-contain opacity-80" />
-                : <span className="font-display font-bold text-sm" style={{ color: x === i ? br.accent : "rgba(255,255,255,.6)" }}>{br.name}</span>}
+                : <span className={`font-display font-bold text-sm ${x === i ? "" : "text-white/60"}`} style={x === i ? { color: br.accent } : undefined}>{br.name}</span>}
             </button>
           ))}
         </div>
@@ -165,7 +178,7 @@ export function LuxurySection({ products, title, subtitle }: { products: Product
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-gold/8 rounded-full blur-[200px]" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <Reveal className="text-center mb-14">
-          <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-gold/15 to-transparent border border-gold/30 text-gold text-sm font-medium mb-5 tracking-widest uppercase">✦ {title} ✦</span>
+          <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-gold/15 to-transparent border border-gold/30 text-gold text-sm font-medium mb-5 tracking-widest uppercase"><Sparkles className="w-4 h-4" /> {title} <Sparkles className="w-4 h-4" /></span>
           <h2 className="text-4xl sm:text-6xl font-display font-black mb-4">Premium <span className="gold-text">Luxury</span> Collection</h2>
           <p className="text-white/85 text-lg max-w-2xl mx-auto">{subtitle} — curated for those who appreciate the finest pour.</p>
         </Reveal>
@@ -216,7 +229,7 @@ function AgeGate({ onVerify }: { onVerify: () => void }) {
       </div>
     );
   return (
-    <div className="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-xl flex items-center justify-center p-6">
+    <div className="fixed inset-0 z-[9999] bg-darker/98 backdrop-blur-xl flex items-center justify-center p-6">
       <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center max-w-md">
         <Image src="/logo.png" alt="Gharmai Drinks" width={160} height={90} className="mx-auto mb-8" />
         <h2 className="text-3xl font-display font-bold mb-3">Age Verification</h2>
@@ -238,7 +251,7 @@ function TopBar({ banner }: { banner?: Banner }) {
   return (
     <div className="relative z-[55] bg-gradient-to-r from-gold-dark via-gold to-gold-dark text-[#0a0a0a] text-center text-sm font-semibold py-2 px-10">
       <span>{banner.headline}</span>
-      <button onClick={() => setShow(false)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#0a0a0a]/60 hover:text-[#0a0a0a]">✕</button>
+      <button onClick={() => setShow(false)} aria-label="Dismiss" className="absolute right-3 top-1/2 -translate-y-1/2 text-[#0a0a0a]/60 hover:text-[#0a0a0a]"><X className="w-4 h-4" /></button>
     </div>
   );
 }
@@ -262,21 +275,21 @@ function Navbar() {
           {links.map(([l, h]) => <a key={h} href={h} className="text-white/80 hover:text-gold text-sm font-medium transition-colors">{l}</a>)}
         </div>
         <div className="flex items-center gap-3">
-          <a href="/admin" title="Admin Panel" aria-label="Admin Panel" className="hidden sm:flex w-11 h-11 rounded-xl bg-white/[0.08] border border-white/10 items-center justify-center hover:border-gold/40 hover:text-gold transition-all text-lg">⚙️</a>
+          <a href="/admin" title="Admin Panel" aria-label="Admin Panel" className="hidden sm:flex w-11 h-11 rounded-xl bg-white/[0.08] border border-white/10 items-center justify-center hover:border-gold/40 hover:text-gold transition-all"><Settings className="w-5 h-5" /></a>
           <ThemeToggle />
-          <button onClick={() => setOpen(true)} className="relative w-11 h-11 rounded-xl bg-white/[0.08] border border-white/10 flex items-center justify-center hover:border-gold/30 transition-all">
-            🛍️
+          <button onClick={() => setOpen(true)} aria-label="Cart" className="relative w-11 h-11 rounded-xl bg-white/[0.08] border border-white/10 flex items-center justify-center hover:border-gold/30 transition-all">
+            <ShoppingBag className="w-5 h-5" />
             {count > 0 && <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-accent rounded-full text-[10px] font-bold flex items-center justify-center">{count}</span>}
           </button>
           <a href="/menu" className="hidden sm:inline-flex px-6 py-2.5 btn-gold rounded-full text-sm">Order Now</a>
-          <button onClick={() => setMobOpen(!mobOpen)} className="lg:hidden w-11 h-11 flex items-center justify-center text-2xl">{mobOpen ? "✕" : "☰"}</button>
+          <button onClick={() => setMobOpen(!mobOpen)} aria-label="Toggle menu" className="lg:hidden w-11 h-11 flex items-center justify-center">{mobOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}</button>
         </div>
       </div>
       <AnimatePresence>
         {mobOpen && (
           <motion.div initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }} className="lg:hidden fixed inset-0 top-20 bg-darker/98 backdrop-blur-2xl flex flex-col items-center justify-center gap-7">
             {links.map(([l, h]) => <a key={h} href={h} onClick={() => setMobOpen(false)} className="text-2xl font-display font-bold text-white/85 hover:text-gold">{l}</a>)}
-            <a href="/admin" onClick={() => setMobOpen(false)} className="mt-2 inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-gold/30 text-gold font-semibold">⚙️ Admin Panel</a>
+            <a href="/admin" onClick={() => setMobOpen(false)} className="mt-2 inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-gold/30 text-gold font-semibold"><Settings className="w-4 h-4" /> Admin Panel</a>
           </motion.div>
         )}
       </AnimatePresence>
@@ -392,7 +405,7 @@ export function Menu({ products, categories, title, subtitle }: { products: Prod
         </Reveal>
 
         <div className="max-w-md mx-auto mb-8 relative">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/45">🔍</span>
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/45" />
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search drinks, food…" className="w-full pl-11 pr-5 py-3.5 rounded-xl bg-white/[0.08] border border-white/10 text-white placeholder-white/45 focus:border-gold/40 focus:outline-none" />
         </div>
 
@@ -490,8 +503,8 @@ function ProductCard({ p, onAdd }: { p: Product; onAdd: () => void }) {
             <span className="font-display font-bold text-lg gold-text">{NPR(p.price)}</span>
             {p.compareAt && <span className="text-white/80 line-through text-xs ml-1">{NPR(p.compareAt)}</span>}
           </div>
-          <button onClick={() => { onAdd(); setAdded(true); setTimeout(() => setAdded(false), 1200); }} className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${added ? "bg-green-500 text-white" : "bg-gold/10 border border-gold/20 text-gold hover:bg-gold hover:text-[#0a0a0a]"}`}>
-            {added ? "✓" : "+"}
+          <button onClick={() => { onAdd(); setAdded(true); setTimeout(() => setAdded(false), 1200); }} aria-label="Add to cart" className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${added ? "bg-green-500 text-pure-white" : "bg-gold/10 border border-gold/20 text-gold hover:bg-gold hover:text-[#0a0a0a]"}`}>
+            {added ? <Check className="w-4 h-4" /> : "+"}
           </button>
         </div>
       </div>
@@ -582,7 +595,7 @@ export function Vip() {
                 {t.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-gold text-[#0a0a0a] text-xs font-bold rounded-full">POPULAR</span>}
                 <h4 className="font-display font-bold text-xl mb-1 gold-text">{t.name}</h4>
                 <p className="text-3xl font-display font-black mb-4">{NPR(t.price)}<span className="text-sm text-white/65 font-normal">/mo</span></p>
-                <ul className="text-white/85 text-sm space-y-2 text-left mb-6">{t.perks.map((p) => <li key={p} className="flex gap-2"><span className="text-gold">✓</span> {p}</li>)}</ul>
+                <ul className="text-white/85 text-sm space-y-2 text-left mb-6">{t.perks.map((p) => <li key={p} className="flex gap-2"><Check className="w-4 h-4 text-gold shrink-0 mt-0.5" /> {p}</li>)}</ul>
                 <a href={`https://wa.me/${WA}?text=${encodeURIComponent("I want to join the " + t.name + " VIP membership!")}`} target="_blank" className={`block w-full py-2.5 rounded-full font-semibold text-sm ${t.popular ? "btn-gold" : "border border-gold/30 text-gold hover:bg-gold/10"} transition-all`}>Join {t.name}</a>
               </div>
             </Reveal>
@@ -596,20 +609,20 @@ export function Vip() {
 // ---------- Why Us ----------
 export function WhyUs() {
   const items = [
-    ["⚡", "30-Min Delivery", "Lightning fast across Pokhara."],
-    ["🛡️", "100% Authentic", "Genuine, sealed products only."],
-    ["🌙", "Until 3 AM", "Late night delivery, 7 days a week."],
-    ["🔞", "Age-Verified", "Secure, responsible, 18+ checkout."],
-  ];
+    [Zap, "30-Min Delivery", "Lightning fast across Pokhara."],
+    [ShieldCheck, "100% Authentic", "Genuine, sealed products only."],
+    [MoonIcon, "Until 3 AM", "Late night delivery, 7 days a week."],
+    [null, "Age-Verified", "Secure, responsible, 18+ checkout."],
+  ] as const;
   return (
     <section className="py-20 sm:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal className="text-center mb-12"><h2 className="text-4xl sm:text-5xl font-display font-black">Why Choose <span className="gold-text">Us?</span></h2></Reveal>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {items.map(([icon, title, desc], i) => (
+          {items.map(([Icon, title, desc], i) => (
             <Reveal key={title} delay={i * 0.08}>
               <div className="glass rounded-2xl p-7 text-center h-full">
-                <div className="text-4xl mb-4">{icon}</div>
+                <div className="mb-4 flex justify-center text-gold">{Icon ? <Icon className="w-9 h-9" /> : <span className="text-2xl font-display font-black">18+</span>}</div>
                 <h4 className="font-display font-bold text-lg mb-2">{title}</h4>
                 <p className="text-white/85 text-sm">{desc}</p>
               </div>
@@ -632,7 +645,7 @@ export function Reviews({ testimonials }: { testimonials: Testimonial[] }) {
           {list.map((t, i) => (
             <Reveal key={t.id} delay={i * 0.08}>
               <div className="glass rounded-2xl p-7 h-full">
-                <div className="text-gold mb-3">{"★".repeat(t.rating)}</div>
+                <div className="flex gap-0.5 text-gold mb-3">{Array.from({ length: t.rating }).map((_, x) => <Star key={x} className="w-4 h-4 fill-current" />)}</div>
                 <p className="text-white/75 text-sm mb-5">&ldquo;{t.body}&rdquo;</p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold to-gold-dark flex items-center justify-center font-bold text-[#0a0a0a]">{t.name[0]}</div>
@@ -679,7 +692,7 @@ export function CtaBanner() {
         <Reveal>
           <h2 className="text-4xl sm:text-6xl font-display font-black mb-6">Ready To <span className="gold-text">Cheers?</span></h2>
           <p className="text-white/85 text-xl mb-10">Don&apos;t let the night wait. Order premium drinks now.</p>
-          <a href={`https://wa.me/${WA}?text=${encodeURIComponent("Hi! I want to order from Gharmai Drinks")}`} target="_blank" className="inline-flex px-10 py-5 bg-gradient-to-r from-green-500 to-green-600 rounded-full font-bold text-xl text-white hover:scale-105 transition-all">Order on WhatsApp</a>
+          <a href={`https://wa.me/${WA}?text=${encodeURIComponent("Hi! I want to order from Gharmai Drinks")}`} target="_blank" className="inline-flex px-10 py-5 bg-gradient-to-r from-green-500 to-green-600 rounded-full font-bold text-xl text-pure-white hover:scale-105 transition-all">Order on WhatsApp</a>
         </Reveal>
       </div>
     </section>
@@ -688,14 +701,14 @@ export function CtaBanner() {
 
 // ---------- Contact ----------
 export function Contact() {
-  const info = [["📍", "Location", "Newroad, Pokhara, Nepal"], ["📞", "Call / WhatsApp", "+977 974-6302115"], ["🕐", "Delivery Hours", "2:00 PM – 3:00 AM Daily"], ["✉️", "Email", "info@gharmaidrinks.com"]];
+  const info = [[MapPin, "Location", "Newroad, Pokhara, Nepal"], [Phone, "Call / WhatsApp", "+977 974-6302115"], [Clock, "Delivery Hours", "2:00 PM – 3:00 AM Daily"], [Mail, "Email", "info@gharmaidrinks.com"]] as const;
   return (
     <section id="contact" className="py-20 sm:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Reveal className="text-center mb-12"><h2 className="text-4xl sm:text-5xl font-display font-black">Contact <span className="gold-text">Us</span></h2></Reveal>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {info.map(([icon, t, d]) => (
-            <div key={t} className="glass rounded-2xl p-6 text-center"><div className="text-3xl mb-3">{icon}</div><h4 className="font-display font-semibold mb-1">{t}</h4><p className="text-white/85 text-sm">{d}</p></div>
+          {info.map(([Icon, t, d]) => (
+            <div key={t} className="glass rounded-2xl p-6 text-center"><div className="mb-3 flex justify-center text-gold"><Icon className="w-7 h-7" /></div><h4 className="font-display font-semibold mb-1">{t}</h4><p className="text-white/85 text-sm">{d}</p></div>
           ))}
         </div>
       </div>
@@ -711,7 +724,7 @@ function Footer() {
         <Image src="/logo.png" alt="Gharmai Drinks" width={140} height={60} className="h-14 w-auto mx-auto mb-4" style={{ width: "auto" }} />
         <p className="text-white/65 text-sm max-w-lg mx-auto mb-6">Nepal&apos;s premium alcohol &amp; food delivery. Cheers from Home. Pokhara, 2 PM – 3 AM daily.</p>
         <div className="p-4 max-w-md mx-auto rounded-xl bg-gold/8 border border-gold/15 mb-6">
-          <p className="text-gold text-xs font-semibold">⚠️ Strictly 18+. Please drink responsibly. Delivery within Pokhara valley only. Sale of alcohol to minors is prohibited.</p>
+          <p className="text-gold text-xs font-semibold flex items-center justify-center gap-1.5"><AlertTriangle className="w-3.5 h-3.5 shrink-0" /> Strictly 18+. Please drink responsibly. Delivery within Pokhara valley only. Sale of alcohol to minors is prohibited.</p>
         </div>
         <p className="text-white/55 text-xs">© 2025 Gharmai Drinks. All rights reserved. · <a href="/blog" className="hover:text-gold">Blog</a> · <a href="/admin" className="hover:text-gold">Admin</a></p>
       </div>
@@ -748,7 +761,7 @@ function CartDrawer() {
             <motion.div initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ type: "tween" }} className="fixed top-0 right-0 w-full max-w-md h-full z-[60] bg-darker/95 backdrop-blur-2xl border-l border-white/10 flex flex-col">
               <div className="flex items-center justify-between p-6 border-b border-white/10">
                 <h3 className="font-display text-xl font-bold">Your Cart</h3>
-                <button onClick={() => setOpen(false)} className="w-10 h-10 rounded-xl bg-white/[0.08] hover:bg-white/10">✕</button>
+                <button onClick={() => setOpen(false)} aria-label="Close cart" className="w-10 h-10 rounded-xl bg-white/[0.08] hover:bg-white/10 flex items-center justify-center"><X className="w-5 h-5" /></button>
               </div>
               <div className="flex-1 overflow-y-auto p-6 space-y-3">
                 {items.length === 0 && <p className="text-center text-white/65 py-16">Your cart is empty</p>}
@@ -759,7 +772,7 @@ function CartDrawer() {
                     <div className="flex items-center gap-2">
                       {i.qty > 1
                         ? <button onClick={() => changeQty(i.id, -1)} aria-label="Decrease" className="w-7 h-7 rounded-lg bg-white/[0.08] border border-white/10 hover:border-gold/30">−</button>
-                        : <button onClick={() => remove(i.id)} aria-label="Remove item" className="w-7 h-7 rounded-lg bg-white/[0.08] border border-white/10 hover:bg-accent/20 hover:text-accent hover:border-accent/30">🗑</button>}
+                        : <button onClick={() => remove(i.id)} aria-label="Remove item" className="w-7 h-7 rounded-lg bg-white/[0.08] border border-white/10 hover:bg-accent/20 hover:text-accent hover:border-accent/30 flex items-center justify-center"><Trash2 className="w-3.5 h-3.5" /></button>}
                       <span className="text-sm font-semibold w-5 text-center">{i.qty}</span>
                       <button onClick={() => changeQty(i.id, 1)} aria-label="Increase" className="w-7 h-7 rounded-lg bg-white/[0.08] border border-white/10 hover:border-gold/30">+</button>
                     </div>
@@ -813,7 +826,7 @@ function Checkout({ onClose, items, subtotal, delivery, clear }: any) {
   async function applyCoupon() {
     const res = await fetch("/api/promotions/validate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ code: form.coupon, subtotal }) });
     const data = await res.json();
-    if (data.valid) { setDiscount(data.discount); setCouponMsg(`✓ ${data.description} applied`); }
+    if (data.valid) { setDiscount(data.discount); setCouponMsg(`${data.description} applied`); }
     else { setDiscount(0); setCouponMsg(data.reason || "Invalid code"); }
   }
 
@@ -852,7 +865,7 @@ function Checkout({ onClose, items, subtotal, delivery, clear }: any) {
       <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-dark-card border border-white/10 rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
         {done ? (
           <div className="p-12 text-center">
-            <div className="text-6xl mb-4">✅</div>
+            <div className="mb-4 flex justify-center text-green-500"><CheckCircle2 className="w-16 h-16" /></div>
             <h3 className="font-display text-2xl font-bold mb-2">Order Placed!</h3>
             <p className="text-white/75">We&apos;ve opened WhatsApp to confirm your order. See you soon!</p>
           </div>
@@ -860,7 +873,7 @@ function Checkout({ onClose, items, subtotal, delivery, clear }: any) {
           <>
             <div className="p-6 border-b border-white/10 flex justify-between items-center">
               <h3 className="font-display text-xl font-bold">Complete Order</h3>
-              <button onClick={onClose} className="w-10 h-10 rounded-xl bg-white/[0.08] hover:bg-white/10">✕</button>
+              <button onClick={onClose} aria-label="Close" className="w-10 h-10 rounded-xl bg-white/[0.08] hover:bg-white/10 flex items-center justify-center"><X className="w-5 h-5" /></button>
             </div>
             <form onSubmit={submit} className="p-6 space-y-4">
               {[["name", "Full Name *", "text"], ["phone", "Phone Number *", "tel"], ["address", "Delivery Address *", "text"], ["maps", "Google Maps Link (optional)", "url"]].map(([k, label, type]) => (
@@ -889,7 +902,7 @@ function Checkout({ onClose, items, subtotal, delivery, clear }: any) {
               </div>
               <Captcha onValidChange={setCaptchaOk} />
               <button type="submit" disabled={!captchaOk}
-                className="w-full py-4 bg-gradient-to-r from-green-500 to-green-600 rounded-xl text-white font-bold text-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed enabled:hover:shadow-lg enabled:hover:shadow-green-500/30">
+                className="w-full py-4 bg-gradient-to-r from-green-500 to-green-600 rounded-xl text-pure-white font-bold text-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed enabled:hover:shadow-lg enabled:hover:shadow-green-500/30">
                 {captchaOk ? "Send Order via WhatsApp" : "Complete the security check above"}
               </button>
             </form>
@@ -903,8 +916,8 @@ function Checkout({ onClose, items, subtotal, delivery, clear }: any) {
 // ---------- WhatsApp Float ----------
 function WhatsAppFloat() {
   return (
-    <a href={`https://wa.me/${WA}?text=${encodeURIComponent("Hi! I want to order from Gharmai Drinks")}`} target="_blank" className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 hover:scale-110 transition-all text-2xl">
-      💬
+    <a href={`https://wa.me/${WA}?text=${encodeURIComponent("Hi! I want to order from Gharmai Drinks")}`} target="_blank" aria-label="Chat on WhatsApp" className="fixed bottom-24 right-5 lg:bottom-6 lg:right-6 z-50 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 hover:scale-110 transition-all text-pure-white">
+      <WhatsAppIcon className="w-7 h-7" />
     </a>
   );
 }
@@ -921,11 +934,11 @@ function MobileNav() {
   return (
     <div className={`fixed bottom-0 left-0 right-0 z-40 lg:hidden transition-transform duration-500 ${show ? "translate-y-0" : "translate-y-full"}`}>
       <div className="bg-darker/95 backdrop-blur-xl border-t border-white/10 px-2 py-2 grid grid-cols-5 text-center text-[10px]">
-        <a href="/" className="py-1.5 text-white/85">🏠<div>Home</div></a>
-        <a href="/menu" className="py-1.5 text-white/85">🍾<div>Menu</div></a>
-        <button onClick={() => setOpen(true)} className="py-1.5 relative"><div className="w-11 h-11 -mt-5 mx-auto rounded-full btn-gold flex items-center justify-center text-lg">🛍️</div><div className="text-gold -mt-0.5">Cart</div>{count > 0 && <span className="absolute top-0 right-1/2 translate-x-4 w-4 h-4 bg-accent rounded-full text-[9px] flex items-center justify-center">{count}</span>}</button>
-        <a href="/specials" className="py-1.5 text-white/85">🎉<div>Deals</div></a>
-        <a href="/vip" className="py-1.5 text-white/85">👑<div>VIP</div></a>
+        <a href="/" className="py-1.5 text-white/85 flex flex-col items-center gap-0.5"><Home className="w-5 h-5" /><div>Home</div></a>
+        <a href="/menu" className="py-1.5 text-white/85 flex flex-col items-center gap-0.5"><Wine className="w-5 h-5" /><div>Menu</div></a>
+        <button onClick={() => setOpen(true)} className="py-1.5 relative"><div className="w-11 h-11 -mt-5 mx-auto rounded-full btn-gold flex items-center justify-center"><ShoppingBag className="w-5 h-5" /></div><div className="text-gold -mt-0.5">Cart</div>{count > 0 && <span className="absolute top-0 right-1/2 translate-x-4 w-4 h-4 bg-accent rounded-full text-[9px] flex items-center justify-center">{count}</span>}</button>
+        <a href="/specials" className="py-1.5 text-white/85 flex flex-col items-center gap-0.5"><Percent className="w-5 h-5" /><div>Deals</div></a>
+        <a href="/vip" className="py-1.5 text-white/85 flex flex-col items-center gap-0.5"><Crown className="w-5 h-5" /><div>VIP</div></a>
       </div>
     </div>
   );
@@ -956,7 +969,7 @@ function Popup({ banner }: { banner?: Banner }) {
   return (
     <div className="fixed inset-0 z-[80] bg-black/80 backdrop-blur-xl flex items-center justify-center p-4">
       <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="bg-dark-card border border-gold/20 rounded-3xl max-w-md w-full overflow-hidden text-center relative">
-        <button onClick={close} className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-black/40 text-white/85 hover:text-white">✕</button>
+        <button onClick={close} aria-label="Close" className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-black/40 text-pure-white hover:bg-black/60 flex items-center justify-center transition-colors"><X className="w-4 h-4" /></button>
         {banner.mediaUrl && <img src={banner.mediaUrl} alt="" className="w-full h-40 object-cover" />}
         <div className="p-8">
           <h3 className="font-display text-2xl font-bold mb-2 gold-text">{banner.headline}</h3>
@@ -974,7 +987,7 @@ function ToastHost() {
   return (
     <AnimatePresence>
       {toast && (
-        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 40 }} className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[90] px-6 py-3 rounded-full bg-green-500 text-white font-semibold shadow-lg">
+        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 40 }} className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[90] px-6 py-3 rounded-full bg-green-500 text-pure-white font-semibold shadow-lg">
           {toast}
         </motion.div>
       )}

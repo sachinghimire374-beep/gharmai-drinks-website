@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import { Lock, Check, RefreshCw } from "lucide-react";
 
 // Lightweight, self-contained human-verification CAPTCHA (no third-party keys).
 // A short arithmetic challenge that must be solved before an order is sent.
@@ -27,7 +28,7 @@ export default function Captcha({ onValidChange }: { onValidChange: (ok: boolean
     <div>
       <label className="text-white/75 text-sm mb-1.5 block">Security check *</label>
       <div className={`flex items-center gap-3 p-3 rounded-xl border transition-colors ${ok ? "border-green-500/40 bg-green-500/5" : "border-white/10 bg-white/[0.06]"}`}>
-        <span className="text-white/50 text-lg" aria-hidden>🔒</span>
+        <Lock className="w-4 h-4 text-white/50 shrink-0" aria-hidden />
         <div className="flex items-center gap-2 font-display font-bold text-lg select-none tracking-wide" aria-hidden>
           <span>{a}</span><span className="text-gold">{op}</span><span>{b}</span><span className="text-white/50">=</span>
         </div>
@@ -41,9 +42,9 @@ export default function Captcha({ onValidChange }: { onValidChange: (ok: boolean
           placeholder="?"
           className="w-16 px-3 py-2 rounded-lg bg-white/[0.08] border border-white/10 text-center font-bold focus:border-gold/40 focus:outline-none"
         />
-        {ok && <span className="text-green-400 text-sm font-semibold">✓ Verified</span>}
+        {ok && <span className="flex items-center gap-1 text-green-400 text-sm font-semibold"><Check className="w-4 h-4" /> Verified</span>}
         <button type="button" onClick={refresh} title="New challenge" aria-label="New challenge"
-          className="ml-auto w-8 h-8 rounded-lg bg-white/[0.08] border border-white/10 hover:border-gold/30 text-sm">↻</button>
+          className="ml-auto w-8 h-8 rounded-lg bg-white/[0.08] border border-white/10 hover:border-gold/30 flex items-center justify-center"><RefreshCw className="w-3.5 h-3.5" /></button>
       </div>
       <p className="text-white/45 text-xs mt-1">Solve the sum to confirm you&apos;re human before ordering.</p>
     </div>

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Sparkles, ShoppingBag, Zap, ShieldCheck, Moon } from "lucide-react";
 import { useCart } from "./CartContext";
 import type { Product } from "./StoreClient";
 
@@ -37,7 +38,7 @@ export default function ProductDetail({ product, related }: { product: Product; 
               <span className="absolute top-5 left-5 px-3.5 py-1.5 rounded-full bg-gold text-[#0a0a0a] text-xs font-bold uppercase tracking-wider">{product.badge}</span>
             )}
             {product.luxury && (
-              <span className="absolute top-5 right-5 px-3.5 py-1.5 rounded-full bg-black/70 border border-gold/40 text-gold text-xs font-bold uppercase tracking-wider">✦ Reserve</span>
+              <span className="absolute top-5 right-5 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black/70 border border-gold/40 text-gold text-xs font-bold uppercase tracking-wider"><Sparkles className="w-3.5 h-3.5" /> Reserve</span>
             )}
           </div>
           {product.images.length > 1 && (
@@ -75,20 +76,20 @@ export default function ProductDetail({ product, related }: { product: Product; 
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 mb-8">
-            <button onClick={() => { addToCart(); setOpen(true); }} className="flex-1 py-4 btn-gold rounded-full text-lg">
-              🛍️ Add to Cart
+            <button onClick={() => { addToCart(); setOpen(true); }} className="flex-1 py-4 btn-gold rounded-full text-lg flex items-center justify-center gap-2">
+              <ShoppingBag className="w-5 h-5" /> Add to Cart
             </button>
             <a href={`https://wa.me/${WA}?text=${waMsg}`} target="_blank" rel="noopener"
-              className="flex-1 py-4 rounded-full bg-gradient-to-r from-green-500 to-green-600 text-white font-bold text-lg text-center hover:shadow-lg hover:shadow-green-500/30 transition-all">
+              className="flex-1 py-4 rounded-full bg-gradient-to-r from-green-500 to-green-600 text-pure-white font-bold text-lg text-center hover:shadow-lg hover:shadow-green-500/30 transition-all">
               Order on WhatsApp
             </a>
           </div>
 
           {/* Trust strip */}
           <div className="grid grid-cols-3 gap-3 text-center">
-            {[["⚡", "30-min delivery"], ["🛡️", "100% sealed"], ["🌙", "Until 3 AM"]].map(([icon, label]) => (
+            {([[Zap, "30-min delivery"], [ShieldCheck, "100% sealed"], [Moon, "Until 3 AM"]] as const).map(([Icon, label]) => (
               <div key={label} className="glass rounded-xl py-3 px-2">
-                <div className="text-xl mb-1">{icon}</div>
+                <div className="mb-1 flex justify-center text-gold"><Icon className="w-5 h-5" /></div>
                 <div className="text-white/75 text-xs">{label}</div>
               </div>
             ))}

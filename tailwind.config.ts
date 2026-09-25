@@ -19,6 +19,7 @@ const config: Config = {
         "dark-card": "rgb(var(--c-card) / <alpha-value>)",
         surface: "rgb(var(--c-surface) / <alpha-value>)",
         white: "rgb(var(--c-fg) / <alpha-value>)", // makes text-white/xx flip with the theme
+        "pure-white": "#ffffff", // literal white for fixed-color surfaces (brand-colored buttons/badges) that don't flip with theme
       },
       fontFamily: {
         display: ["var(--font-playfair)", "serif"],
